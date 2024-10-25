@@ -49,7 +49,7 @@ class CIRPlus(nn.Module):
     def extract_bank_features(self, cirDataset: CIRDataset, device, bank_path, reload_bank=False):
         if not os.path.exists(bank_path) or reload_bank:
             self.refer_bank = None
-            self.target_bank = torch.zeros((cirDataset.image_id, 256), dtype=torch.float, device=self.device)
+            self.target_bank = torch.zeros((cirDataset.image_id, 32, 256), dtype=torch.float, device=self.device)
             data_loader = DataLoader(dataset=cirDataset, batch_size=32, num_workers=multiprocessing.cpu_count(),
                                      pin_memory=True, collate_fn=collate_fn)
             self.query_bank = None
