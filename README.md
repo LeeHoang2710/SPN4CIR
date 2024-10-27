@@ -1,10 +1,13 @@
 # SPN4CIR: Improving Composed Image Retrieval via Contrastive Learning with Scaling Positives and Negatives (ACM MM 2024)
 
+<div align="center">
+
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/BUAADreamer/CCRK/blob/main/licence)
 [![arxiv badge](https://img.shields.io/badge/arxiv-2404.11317-red)](https://arxiv.org/abs/2404.11317)
 [![Pytorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?e&logo=PyTorch&logoColor=white)](https://pytorch.org/)
 [![GitHub Repo stars](https://img.shields.io/github/stars/BUAADreamer/SPN4CIR?style=social)](https://github.com/BUAADreamer/SPN4CIR/stargazers)
-[![HF Model](https://img.shields.io/badge/🤗-Checkpoints%20and%20Data%20in%20HF-blue)](https://huggingface.co/BUAADreamer/SPN4CIR)
+[![HF Model](https://img.shields.io/badge/🤗-Checkpoints-blue)](https://huggingface.co/BUAADreamer/SPN4CIR)
+[![HF Model](https://img.shields.io/badge/🤗-Datasets-blue)](https://huggingface.co/BUAADreamer/cir_dataset)
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/improving-composed-image-retrieval-via/image-retrieval-on-fashion-iq)](https://paperswithcode.com/sota/image-retrieval-on-fashion-iq?p=improving-composed-image-retrieval-via)
 
@@ -14,12 +17,14 @@
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/improving-composed-image-retrieval-via/zero-shot-composed-image-retrieval-zs-cir-on-1)](https://paperswithcode.com/sota/zero-shot-composed-image-retrieval-zs-cir-on-1?p=improving-composed-image-retrieval-via)
 
+</div>
+
 
 ## Table of Contents
 
 - [Overview](#Overview)
 - [Requirements](#Requirements)
-- [Checkpoints](#Checkpoints)
+- [Checkpoints and Datasets](#Checkpoints-and-Datasets)
 - [Pre-Process](#Pre-Process)
 - [CLIP4CIR](#CLIP4CIR)
 - [TGCIR](#TGCIR)
@@ -38,9 +43,11 @@
     <img src="pics/result.png" width="95%" height="auto" />
 </div>
 
-## Checkpoints
+## Checkpoints and Datasets
 
-You can find all **checkpoints and data** at this huggingface repo: [https://huggingface.co/BUAADreamer/SPN4CIR](https://huggingface.co/BUAADreamer/SPN4CIR)
+You can find all **checkpoints and generated data** at this huggingface repo: [https://huggingface.co/BUAADreamer/SPN4CIR](https://huggingface.co/BUAADreamer/SPN4CIR)
+
+For ease of reproduction, we have also uploaded the original FashionIQ and CIRR datasets (including images) to this huggingface repo: [https://huggingface.co/datasets/BUAADreamer/cir_dataset](https://huggingface.co/datasets/BUAADreamer/cir_dataset)
 
 The checkpoints of the first stage model are taken from the repo of the original paper.
 
@@ -149,6 +156,7 @@ project_base_path
 ```
 
 ## Pre-Process
+<details><summary>Click here to show details</summary>
 
 You can use the data we provide or reproduce these pre-process data by code below.
 
@@ -221,7 +229,12 @@ python3 zscir/get_cir_data.py --model zs --data ccfiq --p_list 2 --word_num 10
 python3 zscir/get_cir_data.py --model zs --data cccirr
 ```
 
+</details>
+
+
 ## CLIP4CIR
+
+<details><summary>Click here to show details</summary>
 
 We train our model on one Tesla V100 32G with following commands.
 
@@ -268,7 +281,11 @@ python3 clip4cir/cirr_test_submission.py --model_path checkpoints/cirr_clip/best
 --submission-name clip4cir --data_path cirr_dataset 
 ```
 
+</details>
+
 ## TGCIR
+
+<details><summary>Click here to show details</summary>
 
 We train our model on one Tesla V100 32G with following commands.
 
@@ -315,7 +332,11 @@ python3 tgcir/cirr_test_submission.py --model_path checkpoints/cirr_tg/best.pt \
 --submission-name tgcir --data_path cirr_dataset 
 ```
 
+</details>
+
 ## BLIP4CIR
+
+<details><summary>Click here to show details</summary>
 
 We train our model on one Tesla V100 32G with following commands.
 
@@ -362,7 +383,11 @@ python3 blip4cir/cirr_test_submission.py --model_path checkpoints/cirr_blip/best
 --submission-name blip4cir --data_path cirr_dataset 
 ```
 
+</details>
+
 ## BLIP24CIR
+
+<details><summary>Click here to show details</summary>
 
 We train our model on one Tesla V100 32G with following commands.
 
@@ -409,7 +434,11 @@ python3 blip24cir/cirr_test_submission.py --model_path checkpoints/cirr_blip2/be
 --submission-name blip24cir --data_path cirr_dataset
 ```
 
+</details>
+
 ## ZSCIR
+
+<details><summary>Click here to show details</summary>
 
 We train our model on one Tesla V100 32G with following commands.
 
@@ -507,6 +536,8 @@ python3 zscir/cirr_test_submission.py --model_path checkpoints/cirr_zs/best.pt \
 python3 zscir/cirr_test_submission.py --model_path checkpoints/cirr_zs_cc/best.pt \
 --submission-name zscir_cc --data_path cirr_dataset
 ```
+
+</details>
 
 ## Citation
 
