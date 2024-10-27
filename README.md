@@ -7,7 +7,7 @@
 [![Pytorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?e&logo=PyTorch&logoColor=white)](https://pytorch.org/)
 [![GitHub Repo stars](https://img.shields.io/github/stars/BUAADreamer/SPN4CIR?style=social)](https://github.com/BUAADreamer/SPN4CIR/stargazers)
 [![HF Model](https://img.shields.io/badge/🤗-Checkpoints-blue)](https://huggingface.co/BUAADreamer/SPN4CIR)
-[![HF Model](https://img.shields.io/badge/🤗-Datasets-blue)](https://huggingface.co/BUAADreamer/cir_dataset)
+[![HF Model](https://img.shields.io/badge/🤗-Datasets-blue)](https://huggingface.co/datasets/BUAADreamer/cir_dataset)
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/improving-composed-image-retrieval-via/image-retrieval-on-fashion-iq)](https://paperswithcode.com/sota/image-retrieval-on-fashion-iq?p=improving-composed-image-retrieval-via)
 
