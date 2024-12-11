@@ -1,5 +1,17 @@
-.venv/*
-fashionIQ_dataset/*
-result/*
-checkpoints/*
+# Virtual environment
+.venv/
+
+# Dataset files
+fashionIQ_dataset/
+
+# Result files
+result/
+
+# Checkpoints
+checkpoints/
+
+# Python compiled files
 *.pyc
+
+# LaTeX generated files
+paper/output/
