@@ -162,9 +162,9 @@ class CIRDataset(Dataset):
                     self.triplets.extend(extend_triplets)
             self.triplets = [
                 {
-                    "reference": os.path.join(self.image_path, f'{triplet["candidate"]}.png'),
+                    "reference": os.path.join(self.image_path, f'{triplet["candidate"]}.jpg'),
                     "reference_name": triplet["candidate"],
-                    "target": os.path.join(self.image_path, f'{triplet["target"]}.png'),
+                    "target": os.path.join(self.image_path, f'{triplet["target"]}.jpg'),
                     "target_name": triplet["target"],
                     "captions": triplet['captions']
                 }
@@ -234,7 +234,7 @@ class CIRDataset(Dataset):
                     self.image_id += 1
                     self.imagenames.append(target_name)
             self.imagepaths = [
-                os.path.join(self.image_path, f'{image_name}.png')
+                os.path.join(self.image_path, f'{image_name}.jpg')
                 if self.data_name == 'fiq' else
                 os.path.join(self.image_path, self.name_to_relpath[image_name])
                 for image_name in self.imagenames
@@ -298,13 +298,13 @@ class CIRDataset(Dataset):
             if self.data_name == 'fiq':
                 if self.fiq_val_type == 0:  # original
                     image_name = self.image_names[index]
-                    image_path = os.path.join(self.image_path, f"{image_name}.png")
+                    image_path = os.path.join(self.image_path, f"{image_name}.jpg")
                     image = self.preprocess(PIL.Image.open(image_path))
                     return image_name, image
                 elif self.fiq_val_type == 1:  # VAL set
                     assert self.split == 'val'
                     image_name = self.val_image_names[index]
-                    image_path = os.path.join(self.image_path, f"{image_name}.png")
+                    image_path = os.path.join(self.image_path, f"{image_name}.jpg")
                     image = self.preprocess(PIL.Image.open(image_path))
                     return image_name, image
             elif self.data_name == 'cirr':
