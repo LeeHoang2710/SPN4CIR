@@ -1,19 +1,19 @@
-\documentclass[conference]{IEEEtran}
+\documentclass[conference, a4paper]{IEEEtran}
 
-\usepackage{algorithmic}
 \usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
 \usepackage{cite}
 \usepackage{graphicx}
-\usepackage{multirow}
-\usepackage{placeins}
-\usepackage{textcomp}
 \usepackage{hyperref}
-\usepackage{xcolor}
-\usepackage{tikz}
+\usepackage{multirow}
 \usepackage{orcidlink}
+\usepackage{placeins,textcomp}
+\usepackage{tikz,xcolor}
 
 \begin{document}
-\title{Fashion Retrieval}
+
+\title{Fashion Retrieval with Contrastive Learning}
+
 \author{
     \IEEEauthorblockN{Lê Hoàng Bùi}
     \IEEEauthorblockA{
@@ -38,26 +38,18 @@
         Ho Chi Minh City, Vietnam\\
         \orcidlinkc{0009-0000-2835-3711}
     }
-    % \and
-    % \IEEEauthorblockN{Dr.\ Trung-Nghia Le}
-    % \IEEEauthorblockA{
-    %     \textit{Software Engineering Lab}\\
-    %     \textit{University of Science, VNU-HCM}\\
-    %     Ho Chi Minh City, Vietnam\\
-    %     \orcidlinkc{0000-0002-7363-2610}
-    % }
 }
+
 \maketitle
 
-\input{sections/0_abstract.tex}
-\input{sections/1_introduction.tex}
-\input{sections/2_related_work.tex}
-\input{sections/3_methodology.tex}
-\input{sections/4_experiments.tex}
-\input{sections/5_discussion.tex}
-\input{sections/6_conclusion.tex}
+\input{sections/0_abstract}
+\input{sections/1_introduction}
+\input{sections/2_related_work}
+\input{sections/3_methodology}
+\input{sections/4_experiments}
+\input{sections/5_conclusion}
 
 \bibliographystyle{IEEEtran}
-\bibliography{references.bib}
+\bibliography{references}
 
 \end{document}

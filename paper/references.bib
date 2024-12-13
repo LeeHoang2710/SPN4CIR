@@ -1,40 +1,332 @@
-@misc{bai2023sentencelevelpromptsbenefitcomposed,
+@misc{baldrati2023composedimageretrievalusing,
+    author        = {Alberto Baldrati and Marco Bertini and Tiberio Uricchio and Alberto del Bimbo},
+    title         = {Composed Image Retrieval using Contrastive Learning and Task-oriented CLIP-based Features},
+    year          = {2023},
+    url           = {https://arxiv.org/abs/2308.11485},
+    eprint        = {2308.11485},
     archiveprefix = {arXiv},
-    author        = {Yang Bai and Xinxing Xu and Yong Liu and Salman Khan and Fahad Khan and Wangmeng Zuo and Rick Siow Mong Goh and Chun-Mei Feng},
-    eprint        = {2310.05473},
-    primaryclass  = {cs.CV},
-    title         = {Sentence-level Prompts Benefit Composed Image Retrieval},
-    url           = {https://arxiv.org/abs/2310.05473},
-    year          = {2023}
+    primaryclass  = {cs.CV}
+}
+@inproceedings{Baldrati_2022_CVPR,
+    author    = {Baldrati, Alberto and Bertini, Marco and Uricchio, Tiberio and Del Bimbo, Alberto},
+    title     = {Conditioned and Composed Image Retrieval Combining and Partially Fine-Tuning CLIP-Based Features},
+    year      = {2022},
+    pages     = {4959--4968},
+    month     = jun,
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops}
 }
 @article{Chen_Zhong_He_Peng_Zhou_Cheng_2024,
-    abstractnote = {The goal of composed fashion image retrieval is to locate a target image based on a reference image and modified text. Recent methods utilize symmetric encoders (e.g., CLIP) pre-trained on large-scale non-fashion datasets. However, the input for this task exhibits an asymmetric nature, where the reference image contains rich content while the modified text is often brief. Therefore, methods employing symmetric encoders encounter a severe phenomenon: retrieval results dominated by reference images, leading to the oversight of modified text. We propose a Fashion Enhance-and-Refine Network (FashionERN) centered around two aspects: enhancing the text encoder and refining visual semantics. We introduce a Triple-branch Modifier Enhancement model, which injects relevant information from the reference image and aligns the modified text modality with the target image modality. Furthermore, we propose a Dual-guided Vision Refinement model that retains critical visual information through text-guided refinement and self-guided refinement processes. The combination of these two models significantly mitigates the reference dominance phenomenon, ensuring accurate fulfillment of modifier requirements. Comprehensive experiments demonstrate our approach’s state-of-the-art performance on four commonly used datasets.},
-    author       = {Chen, Yanzhe and Zhong, Huasong and He, Xiangteng and Peng, Yuxin and Zhou, Jiahuan and Cheng, Lele},
-    doi          = {10.1609/aaai.v38i2.27885},
-    journal      = {Proceedings of the AAAI Conference on Artificial Intelligence},
-    month        = {Mar.},
-    number       = {2},
-    pages        = {1228-1236},
-    title        = {FashionERN: Enhance-and-Refine Network for Composed Fashion Image Retrieval},
-    url          = {https://ojs.aaai.org/index.php/AAAI/article/view/27885},
-    volume       = {38},
-    year         = {2024}
+    author   = {Chen, Yanzhe and Zhong, Huasong and He, Xiangteng and Peng, Yuxin and Zhou, Jiahuan and Cheng, Lele},
+    title    = {FashionERN: Enhance-and-Refine Network for Composed Fashion Image Retrieval},
+    journal  = {Proceedings of the AAAI Conference on Artificial Intelligence},
+    year     = {2024},
+    volume   = {38},
+    number   = {2},
+    pages    = {1228--1236},
+    month    = mar,
+    doi      = {10.1609/aaai.v38i2.27885},
+    url      = {https://ojs.aaai.org/index.php/AAAI/article/view/27885},
+    abstract = {The goal of composed fashion image retrieval is to locate a target image based on a reference image and modified text. Recent methods utilize symmetric encoders (e.g., CLIP) pre-trained on large-scale non-fashion datasets. However, the input for this task exhibits an asymmetric nature, where the reference image contains rich content while the modified text is often brief. Therefore, methods employing symmetric encoders encounter a severe phenomenon: retrieval results dominated by reference images, leading to the oversight of modified text. We propose a Fashion Enhance-and-Refine Network (FashionERN) centered around two aspects: enhancing the text encoder and refining visual semantics. We introduce a Triple-branch Modifier Enhancement model, which injects relevant information from the reference image and aligns the modified text modality with the target image modality. Furthermore, we propose a Dual-guided Vision Refinement model that retains critical visual information through text-guided refinement and self-guided refinement processes. The combination of these two models significantly mitigates the reference dominance phenomenon, ensuring accurate fulfillment of modifier requirements. Comprehensive experiments demonstrate our approach's state-of-the-art performance on four commonly used datasets.}
 }
-@misc{feng2024improvingcomposedimageretrieval,
+@misc{wei2023uniirtrainingbenchmarkinguniversal,
+    author        = {Cong Wei and Yang Chen and Haonan Chen and Hexiang Hu and Ge Zhang and Jie Fu and Alan Ritter and Wenhu Chen},
+    title         = {UniIR: Training and Benchmarking Universal Multimodal Information Retrievers},
+    year          = {2023},
+    url           = {https://arxiv.org/abs/2311.17136},
+    eprint        = {2311.17136},
     archiveprefix = {arXiv},
-    author        = {Zhangchi Feng and Richong Zhang and Zhijie Nie},
-    eprint        = {2404.11317},
-    primaryclass  = {cs.CV},
-    title         = {Improving Composed Image Retrieval via Contrastive Learning with Scaling Positives and Negatives},
-    url           = {https://arxiv.org/abs/2404.11317},
-    year          = {2024}
+    primaryclass  = {cs.CV}
+}
+@article{10.1145/3531017,
+    author     = {De Divitiis, Lavinia and Becattini, Federico and Baecchi, Claudio and Del Bimbo, Alberto},
+    title      = {Disentangling Features for Fashion Recommendation},
+    journal    = {ACM Trans. Multimedia Comput. Commun. Appl.},
+    year       = {2023},
+    volume     = {19},
+    number     = {1s},
+    pages      = {39:1--39:21},
+    month      = jan,
+    doi        = {10.1145/3531017},
+    url        = {https://doi.org/10.1145/3531017},
+    abstract   = {Online stores have become fundamental for the fashion industry, revolving around recommendation systems to suggest appropriate items to customers. Such recommendations often suffer from a lack of diversity and propose items that are similar to previous purchases of a user. Recently, a novel kind of approach based on Memory Augmented Neural Networks (MANNs) has been proposed, aimed at recommending a variety of garments to create an outfit by complementing a given fashion item. In this article we address the task of compatible garment recommendation developing a MANN architecture by taking into account the co-occurrence of clothing attributes, such as shape and color, to compose an outfit. To this end we obtain disentangled representations of fashion items and store them in external memory modules, used to guide recommendations at inference time. We show that our disentangled representations are able to achieve significantly better performance compared to the state of the art and also provide interpretable latent spaces, giving a qualitative explanation of the recommendations.},
+    address    = {New York, NY, USA},
+    issn       = {1551-6857},
+    keywords   = {recommendation systems, memory augmented neural networks, Garment recommendation},
+    publisher  = {Association for Computing Machinery},
+    articleno  = {39},
+    issue_date = {February 2023}
+}
+@inproceedings{placeholder_inproceedings,
+    author    = {Doe, John and Smith, Jane},
+    title     = {A Sample Conference Paper},
+    year      = {2025},
+    pages     = {1--10},
+    booktitle = {Proceedings of the Sample Conference}
+}
+@article{placeholder_article,
+    author  = {Doe, John and Smith, Jane},
+    title   = {A Sample Journal Article},
+    journal = {Sample Journal},
+    year    = {2025},
+    volume  = {1},
+    number  = {1},
+    pages   = {1--10}
+}
+@misc{placeholder_misc,
+    author = {Doe, John and Smith, Jane},
+    title  = {A Sample Miscellaneous Entry},
+    year   = {2025},
+    url    = {https://example.com}
+}
+@misc{gu2024compodiffversatilecomposedimage,
+    author        = {Geonmo Gu and Sanghyuk Chun and Wonjae Kim and HeeJae Jun and Yoohoon Kang and Sangdoo Yun},
+    title         = {CompoDiff: Versatile Composed Image Retrieval With Latent Diffusion},
+    year          = {2024},
+    url           = {https://arxiv.org/abs/2303.11916},
+    eprint        = {2303.11916},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.CV}
+}
+@inproceedings{Goenka_2022_CVPR,
+    author    = {Goenka, Sonam and Zheng, Zhaoheng and Jaiswal, Ayush and Chada, Rakesh and Wu, Yue and Hedau, Varsha and Natarajan, Pradeep},
+    title     = {FashionVLP: Vision Language Transformer for Fashion Retrieval With Feedback},
+    year      = {2022},
+    pages     = {14105--14115},
+    month     = jun,
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}
+}
+@inproceedings{hou2021disentanglement,
+    author    = {Hou, Yuxin and Vig, Eleonora and Donoser, Michael and Bazzani, Loris},
+    title     = {Learning Attribute-driven Disentangled Representations for Interactive Fashion Retrieval},
+    year      = {2021},
+    month     = {October},
+    booktitle = {The International Conference on Computer Vision (ICCV)}
+}
+@misc{wu2020fashioniqnewdataset,
+    author        = {Hui Wu and Yupeng Gao and Xiaoxiao Guo and Ziad Al-Halah and Steven Rennie and Kristen Grauman and Rogerio Feris},
+    title         = {Fashion IQ: A New Dataset Towards Retrieving Images by Natural Language Feedback},
+    year          = {2020},
+    url           = {https://arxiv.org/abs/1905.12794},
+    eprint        = {1905.12794},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.CV}
+}
+@misc{zhang2024magiclensselfsupervisedimageretrieval,
+    author        = {Kai Zhang and Yi Luan and Hexiang Hu and Kenton Lee and Siyuan Qiao and Wenhu Chen and Yu Su and Ming-Wei Chang},
+    title         = {MagicLens: Self-Supervised Image Retrieval with Open-Ended Instructions},
+    year          = {2024},
+    url           = {https://arxiv.org/abs/2403.19651},
+    eprint        = {2403.19651},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.CV}
+}
+@misc{zhou2024coarsetofinealignmentmakesbetter,
+    author        = {Lifeng Zhou and Yuke Li},
+    title         = {Coarse-to-fine Alignment Makes Better Speech-image Retrieval},
+    year          = {2024},
+    url           = {https://arxiv.org/abs/2408.13119},
+    eprint        = {2408.13119},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.CL}
+}
+@inproceedings{Liu_2021_ICCV,
+    author    = {Liu, Zheyuan and Rodriguez-Opazo, Cristian and Teney, Damien and Gould, Stephen},
+    title     = {Image Retrieval on Real-Life Images With Pre-Trained Vision-and-Language Models},
+    year      = {2021},
+    pages     = {2125-2134},
+    month     = oct,
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)}
+}
+@misc{wu2020conditionalnegativesamplingcontrastive,
+    author        = {Mike Wu and Milan Mosse and Chengxu Zhuang and Daniel Yamins and Noah Goodman},
+    title         = {Conditional Negative Sampling for Contrastive Learning of Visual Representations},
+    year          = {2020},
+    url           = {https://arxiv.org/abs/2010.02037},
+    eprint        = {2010.02037},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.LG}
+}
+@article{https://doi.org/10.1002/int.23082,
+    author   = {Ren, Xiuxiu and Zheng, Xiangwei and Zhou, Huiyu and Liu, Weilong and Dong, Xiao},
+    title    = {Contrastive hashing with vision transformer for image retrieval},
+    journal  = {International Journal of Intelligent Systems},
+    year     = {2022},
+    volume   = {37},
+    number   = {12},
+    pages    = {12192-12211},
+    doi      = {https://doi.org/10.1002/int.23082},
+    url      = {https://onlinelibrary.wiley.com/doi/abs/10.1002/int.23082},
+    abstract = {Abstract Hashing techniques have attracted considerable attention owing to their advantages of efficient computation and economical storage. However, it is still a challenging problem to generate more compact binary codes for promising performance. In this paper, we propose a novel contrastive vision transformer hashing method, which seamlessly integrates contrastive learning and vision transformers (ViTs) with hash technology into a well-designed model to learn informative features and compact binary codes simultaneously. First, we modify the basic contrastive learning framework by designing several hash layers to meet the specific requirement of hash learning. In our hash network, ViTs are applied as backbones for feature learning, which is rarely performed in existing hash learning methods. Then, we design a multiobjective loss function, in which contrastive loss explores discriminative features by maximizing agreement between different augmented views from the same image, similarity preservation loss performs pairwise semantic preservation to enhance the representative capabilities of hash codes, and quantization loss controls the quantitative error. Hence, we can facilitate end-to-end joint training to improve the retrieval performance. The encouraging experimental results on three widely used benchmark databases demonstrate the superiority of our algorithm compared with several state-of-the-art hashing algorithms.},
+    eprint   = {https://onlinelibrary.wiley.com/doi/pdf/10.1002/int.23082},
+    keywords = {contrastive learning, deep hashing, image retrieval, vision transformer}
+}
+@inproceedings{Saito_2023_CVPR,
+    author    = {Saito, Kuniaki and Sohn, Kihyuk and Zhang, Xiang and Li, Chun-Liang and Lee, Chen-Yu and Saenko, Kate and Pfister, Tomas},
+    title     = {Pic2Word: Mapping Pictures to Words for Zero-Shot Composed Image Retrieval},
+    year      = {2023},
+    pages     = {19305-19314},
+    month     = jun,
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}
+}
+@article{Tang_Yu_Gai_Zhuang_Xiong_Hu_Wu_2024,
+    author       = {Tang, Yuanmin and Yu, Jing and Gai, Keke and Zhuang, Jiamin and Xiong, Gang and Hu, Yue and Wu, Qi},
+    title        = {Context-I2W: Mapping Images to Context-Dependent Words for Accurate Zero-Shot Composed Image Retrieval},
+    journal      = {Proceedings of the AAAI Conference on Artificial Intelligence},
+    year         = {2024},
+    volume       = {38},
+    number       = {6},
+    pages        = {5180-5188},
+    month        = mar,
+    doi          = {10.1609/aaai.v38i6.28324},
+    url          = {https://ojs.aaai.org/index.php/AAAI/article/view/28324},
+    abstractnote = {Different from the Composed Image Retrieval task that requires expensive labels for training task-specific models, Zero-Shot Composed Image Retrieval (ZS-CIR) involves diverse tasks with a broad range of visual content manipulation intent that could be related to domain, scene, object, and attribute. The key challenge for ZS-CIR tasks is to learn a more accurate image representation that has adaptive attention to the reference image for various manipulation descriptions. In this paper, we propose a novel context-dependent mapping network, named Context-I2W, for adaptively converting description-relevant Image information into a pseudo-word token composed of the description for accurate ZS-CIR. Specifically, an Intent View Selector first dynamically learns a rotation rule to map the identical image to a task-specific manipulation view. Then a Visual Target Extractor further captures local information covering the main targets in ZS-CIR tasks under the guidance of multiple learnable queries. The two complementary modules work together to map an image to a context-dependent pseudo-word token without extra supervision. Our model shows strong generalization ability on four ZS-CIR tasks, including domain conversion, object composition, object manipulation, and attribute manipulation. It obtains consistent and significant performance boosts ranging from 1.88% to 3.60% over the best methods and achieves new state-of-the-art results on ZS-CIR. Our code is available at https://anonymous.4open.science/r/Context-I2W-4224/.}
+}
+@inproceedings{Tian_2023_WACV,
+    author    = {Tian, Yuxin and Newsam, Shawn and Boakye, Kofi},
+    title     = {Fashion Image Retrieval With Text Feedback by Additive Attention Compositional Learning},
+    year      = {2023},
+    pages     = {1011--1021},
+    month     = jan,
+    booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)}
+}
+@misc{brooks2023instructpix2pixlearningfollowimage,
+    author        = {Tim Brooks and Aleksander Holynski and Alexei A. Efros},
+    title         = {InstructPix2Pix: Learning to Follow Image Editing Instructions},
+    year          = {2023},
+    url           = {https://arxiv.org/abs/2211.09800},
+    eprint        = {2211.09800},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.CV}
+}
+@misc{chen2020simpleframeworkcontrastivelearning,
+    author        = {Ting Chen and Simon Kornblith and Mohammad Norouzi and Geoffrey Hinton},
+    title         = {A Simple Framework for Contrastive Learning of Visual Representations},
+    year          = {2020},
+    url           = {https://arxiv.org/abs/2002.05709},
+    eprint        = {2002.05709},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.LG}
+}
+@article{Ventura_2024,
+    author    = {Ventura, Lucas and Yang, Antoine and Schmid, Cordelia and Varol, Gül},
+    title     = {CoVR-2: Automatic Data Construction for Composed Video Retrieval},
+    journal   = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+    year      = {2024},
+    volume    = {46},
+    number    = {12},
+    pages     = {11409--11421},
+    month     = dec,
+    doi       = {10.1109/tpami.2024.3463799},
+    url       = {http://dx.doi.org/10.1109/TPAMI.2024.3463799},
+    issn      = {1939-3539},
+    publisher = {Institute of Electrical and Electronics Engineers (IEEE)}
+}
+@inproceedings{Vo_2019_CVPR,
+    author    = {Vo, Nam and Jiang, Lu and Sun, Chen and Murphy, Kevin and Li, Li-Jia and Fei-Fei, Li and Hays, James},
+    title     = {Composing Text and Image for Image Retrieval - an Empirical Odyssey},
+    year      = {2019},
+    month     = jun,
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}
+}
+@inproceedings{Wen_2023,
+    author     = {Wen, Haokun and Zhang, Xian and Song, Xuemeng and Wei, Yinwei and Nie, Liqiang},
+    title      = {Target-Guided Composed Image Retrieval},
+    year       = {2023},
+    pages      = {915--923},
+    month      = oct,
+    doi        = {10.1145/3581783.3611817},
+    url        = {http://dx.doi.org/10.1145/3581783.3611817},
+    booktitle  = {Proceedings of the 31st ACM International Conference on Multimedia},
+    publisher  = {ACM},
+    series     = {MM '23},
+    collection = {MM '23}
 }
 @misc{zhao2024unifashionunifiedvisionlanguagemodel,
-    archiveprefix = {arXiv},
     author        = {Xiangyu Zhao and Yuehan Zhang and Wenlong Zhang and Xiao-Ming Wu},
-    eprint        = {2408.11305},
-    primaryclass  = {cs.CV},
     title         = {UniFashion: A Unified Vision-Language Model for Multimodal Fashion Retrieval and Generation},
+    year          = {2024},
     url           = {https://arxiv.org/abs/2408.11305},
-    year          = {2024}
+    eprint        = {2408.11305},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.CV}
+}
+
+@misc{han2017automaticspatiallyawarefashionconcept,
+    author        = {Xintong Han and Zuxuan Wu and Phoenix X. Huang and Xiao Zhang and Menglong Zhu and Yuan Li and Yang Zhao and Larry S. Davis},
+    title         = {Automatic Spatially-aware Fashion Concept Discovery},
+    year          = {2017},
+    url           = {https://arxiv.org/abs/1708.01311},
+    eprint        = {1708.01311},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.CV}
+}
+@article{10.1109/TMM.2023.3235495,
+    author     = {Xu, Yahui and Bin, Yi and Wei, Jiwei and Yang, Yang and Wang, Guoqing and Shen, Heng Tao},
+    title      = {Multi-Modal Transformer With Global-Local Alignment for Composed Query Image Retrieval},
+    journal    = {Trans. Multi.},
+    year       = {2023},
+    volume     = {25},
+    number     = {1},
+    pages      = {8346--8357},
+    month      = jan,
+    doi        = {10.1109/TMM.2023.3235495},
+    url        = {https://doi.org/10.1109/TMM.2023.3235495},
+    abstract   = {In this paper, we study the composed query image retrieval, which aims at retrieving the target image similar to the composed query, i.e., a reference image and the desired modification text. Compared with conventional image retrieval, this task is more challenging as it not only requires precisely aligning the composed query and target image in a common embedding space, but also simultaneously extracting related information from the reference image and modification text. In order to properly extract related information from the composed query, existing methods usually embed vision-language inputs using different feature encoders, e.g., CNN for images and LSTM/BERT for text, and then employ a complicated manually-designed composition module for learning the joint image-text representation. However, the architecture discrepancy in feature encoders would restrict the vision-language plenitudinous interaction. Meanwhile, certain complicated composition designs might significantly hamper the generalization ability of the model. To tackle these problems, we propose a new framework termed ComqueryFormer, which effectively processes the composed query with the Transformer for this task. Specifically, to eliminate the architecture discrepancy, we leverage a unified transformer-based architecture to homogeneously encode the vision-language inputs. Meanwhile, instead of the complicated composition module, the neat yet effective cross-modal transformer is adopted to hierarchically fuse the composed query at various vision scales. On the other hand, we introduce an efficient global-local alignment module to narrow the distance between the composed query and the target image. It not only considers the divergence in the global joint embedding space but also forces the model to focus on the local detail differences. Extensive experiments on three real-world datasets demonstrate the superiority of our ComqueryFormer.},
+    issn       = {1520-9210},
+    publisher  = {IEEE Press},
+    issue_date = {2023},
+    numpages   = {12}
+}
+@misc{bai2023sentencelevelpromptsbenefitcomposed,
+    author        = {Yang Bai and Xinxing Xu and Yong Liu and Salman Khan and Fahad Khan and Wangmeng Zuo and Rick Siow Mong Goh and Chun-Mei Feng},
+    title         = {Sentence-level Prompts Benefit Composed Image Retrieval},
+    year          = {2023},
+    url           = {https://arxiv.org/abs/2310.05473},
+    eprint        = {2310.05473},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.CV}
+}
+@misc{patel2022recallksurrogatelosslarge,
+    author        = {Yash Patel and Giorgos Tolias and Jiri Matas},
+    title         = {Recall@k Surrogate Loss with Large Batches and Similarity Mixup},
+    year          = {2022},
+    url           = {https://arxiv.org/abs/2108.11179},
+    eprint        = {2108.11179},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.CV}
+}
+@misc{zhao2022progressivelearningimageretrieval,
+    author        = {Yida Zhao and Yuqing Song and Qin Jin},
+    title         = {Progressive Learning for Image Retrieval with Hybrid-Modality Queries},
+    year          = {2022},
+    url           = {https://arxiv.org/abs/2204.11212},
+    eprint        = {2204.11212},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.CV}
+}
+@misc{feng2024improvingcomposedimageretrieval,
+    author        = {Zhangchi Feng and Richong Zhang and Zhijie Nie},
+    title         = {Improving Composed Image Retrieval via Contrastive Learning with Scaling Positives and Negatives},
+    year          = {2024},
+    url           = {https://arxiv.org/abs/2404.11317},
+    eprint        = {2404.11317},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.CV}
+}
+@misc{wu2018unsupervisedfeaturelearningnonparametric,
+    author        = {Zhirong Wu and Yuanjun Xiong and Stella Yu and Dahua Lin},
+    title         = {Unsupervised Feature Learning via Non-Parametric Instance-level Discrimination},
+    year          = {2018},
+    url           = {https://arxiv.org/abs/1805.01978},
+    eprint        = {1805.01978},
+    archiveprefix = {arXiv},
+    primaryclass  = {cs.CV}
+}
+@inproceedings{Zhou_2024_CVPR,
+    author    = {Zhou, Dewei and Li, You and Ma, Fan and Zhang, Xiaoting and Yang, Yi},
+    title     = {MIGC: Multi-Instance Generation Controller for Text-to-Image Synthesis},
+    year      = {2024},
+    pages     = {6818-6828},
+    month     = jun,
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}
 }
