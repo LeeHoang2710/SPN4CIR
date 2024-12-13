@@ -14,4 +14,11 @@ checkpoints/
 *.pyc
 
 # LaTeX generated files
-paper/output/
+paper/output/*
+!paper/output/main.pdf
+
+# Logs
+*.log
+
+# Text files
+*.txt
