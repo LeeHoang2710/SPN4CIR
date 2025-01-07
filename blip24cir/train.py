@@ -1,6 +1,8 @@
 import json
 import os.path
 import random
+import pandas as pd
+# import nni
 from argparse import ArgumentParser
 from collections import OrderedDict
 from datetime import datetime
@@ -23,6 +25,7 @@ base_path = Path(__file__).absolute().parents[1].absolute()
 
 
 def main():
+    print(f"Base path: {base_path}")
     if args.debug:
         training_path = Path(base_path / f"models/debug")
         training_path.mkdir(exist_ok=True)
@@ -141,8 +144,8 @@ def main():
                 }
                 print(json.dumps(results_dict, indent=4))
                 cur_score = results_dict['recall_mean']
-                if args.nni:
-                    nni.report_intermediate_result({'default': best_score, "recall_mean": results_dict['recall_mean']})
+                # if args.nni:
+                #     nni.report_intermediate_result({'default': best_score, "recall_mean": results_dict['recall_mean']})
             elif args.dataset == 'fiq':
                 recalls_at10 = []
                 recalls_at50 = []
@@ -169,24 +172,24 @@ def main():
                 })
                 cur_score = results_dict['average_recall']
                 print(json.dumps(results_dict, indent=4))
-                if args.nni:
-                    nni.report_intermediate_result(
-                        {'default': best_score, "average_recall_at10": results_dict['average_recall_at10']})
+                # if args.nni:
+                #     nni.report_intermediate_result(
+                #         {'default': best_score, "average_recall_at10": results_dict['average_recall_at10']})
 
             if cur_score > best_score:
                 best_score = cur_score
                 print("current best:", best_score)
                 if not args.nni:
                     save_model('best', epoch, model, training_path)
-    if args.nni:
-        nni.report_final_result({'default': best_score})
+    # if args.nni:
+    #     nni.report_final_result({'default': best_score})
 
 
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument("--dataset", type=str, required=True, choices=['fiq', 'cirr'],
                         help="should be either 'cirr' or 'fiq'")
-    parser.add_argument("--num-epochs", default=5, type=int, help="number training epochs")
+    parser.add_argument("--num-epochs", default=1, type=int, help="number training epochs")
     parser.add_argument("--blip_model_name", default="blip2_cir_align_prompt", type=str)
     parser.add_argument("--learning-rate", default=1e-5, type=float, help="Learning rate")
     parser.add_argument("--batch-size", default=32, type=int, help="Batch size")
@@ -225,13 +228,12 @@ if __name__ == '__main__':
     np.random.seed(seed)  # Numpy module.
     torch.backends.cudnn.benchmark = False
     torch.backends.cudnn.deterministic = False
-    if args.nni:
-        import nni
-        from nni.utils import merge_parameter
+    # if args.nni:
+    #     from nni.utils import merge_parameter
 
-        nni_args = nni.get_next_parameter()
-        args = merge_parameter(args, nni_args)
-    print('Arguments:')
-    for k in args.__dict__.keys():
-        print('    ', k, ':', str(args.__dict__[k]))
+    #     nni_args = nni.get_next_parameter()
+    #     args = merge_parameter(args, nni_args)
+    # print('Arguments:')
+    # for k in args.__dict__.keys():
+    #     print('    ', k, ':', str(args.__dict__[k]))
     main()

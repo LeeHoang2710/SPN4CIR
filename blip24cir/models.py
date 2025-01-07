@@ -27,7 +27,7 @@ class CIRPlus(nn.Module):
             self.blip_model._update_f_former()
         self.input_dim = 224
         self.device = device
-        print("image size:", self.input_dim)
+        print("Image size:", self.input_dim)
         self.crossentropy_criterion = nn.CrossEntropyLoss()
         if transform == 'targetpad':
             self.preprocess = targetpad_transform(target_ratio, self.input_dim)
@@ -44,7 +44,7 @@ class CIRPlus(nn.Module):
             self.load_state_dict(saved_state_dict['state_dict'], strict=False)
             self.blip_model.init_stage2(self.tau)
             self.load_state_dict(saved_state_dict['state_dict'], strict=False)
-        print('model loaded successfully')
+        print('Model loaded successfully')
 
     def extract_bank_features(self, cirDataset: CIRDataset, device, bank_path, reload_bank=False):
         if not os.path.exists(bank_path) or reload_bank:
@@ -86,7 +86,7 @@ class CIRPlus(nn.Module):
                 self.query_bank = None
             elif len(items) == 3:
                 self.refer_bank, self.target_bank, self.query_bank = items
-        print("load bank successfully")
+        print("Load bank successfully")
 
     def extract_refer_bank_features(self, cirDataset: CIRDataset, device, bank_path, reload_bank=False):
         if not os.path.exists(bank_path) or reload_bank:
@@ -111,7 +111,7 @@ class CIRPlus(nn.Module):
 
     def load_refer_bank(self, bank_path):
         self.refer_bank = torch.load(bank_path)
-        print("load reference bank successfully")
+        print("Load reference bank successfully")
 
     def forward(self, text, indexs, target_indexs, refer_indexs):
         self.blip_model.train()
