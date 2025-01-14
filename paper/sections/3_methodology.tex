@@ -3,14 +3,13 @@
 
 \begin{figure*}[t]
     \centering
-    \includegraphics[width=\textwidth]{figures/overview.png}
-    \caption{Overview of the methodology.}
-    \label{fig:methodology_overview}
+    \includegraphics[width=\textwidth]{figures/workflows.png}
+    \caption{Workflows of the Late Fusion method (left) and our proposed one (right).}
+    \label{fig:workflows}
 \end{figure*}
 
 \subsection{Baselines}
-
-The baselines we used are derived from two key papers. Bai et al., 2023~\cite{bai2023sentencelevelpromptsbenefitcomposed} introduces the initial methodology for composed image retrieval (CIR) using sentence-level prompts. Feng et al., 2024~\cite{feng2024improvingcomposedimageretrieval} presents improvements over the first by leveraging contrastive learning with scaling positives and negatives to enhance CIR performance. Figure~\ref{fig:methodology_overview} provides an overview of the methodology.
+The baselines we used are derived from two key papers. Bai et al., 2023~\cite{bai2023sentencelevelpromptsbenefitcomposed} introduces the initial methodology for composed image retrieval (CIR) using sentence-level prompts. Feng et al., 2024~\cite{feng2024improvingcomposedimageretrieval} presents improvements over the first by leveraging contrastive learning with scaling positives and negatives to enhance CIR performance. Figure~\ref{fig:workflows}, based on Figure provides an overview of the methodology.
 
 \subsubsection{Preliminary}
 Suppose a CIR dataset consists of \(N\) annotated triplets consisting of reference images (\(r\)), modified text (\(t\)), and target image (\(t\)). A candidate image set consists of all reference images and target images. The task is to use reference image \(r(i)\) and modified text \(t(i)\) to compose a query \(q(i)\). Then this \(q(i)\) is used to retrieve target images from the candidate set.

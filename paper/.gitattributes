@@ -1,0 +1,7 @@
+*          text=auto
+
+# Set line ending for LaTeX files
+*.tex      text eol=lf
+*.sty      text eol=lf
+*.cls      text eol=lf
+*.bib      text eol=lf
