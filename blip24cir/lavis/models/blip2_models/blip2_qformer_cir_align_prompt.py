@@ -173,6 +173,8 @@ class Blip2QformerCirAlignPrompt(Blip2Base):
             refer_feats = F.normalize(
                 self.vision_proj(refer_output.last_hidden_state), dim=-1
             )
+
+            # outputs = self.Qformer.generate()
             return fusion_hidden_feats, target_feats, refer_feats, fusion_feats
 
     @torch.no_grad()
@@ -227,9 +229,7 @@ class Blip2QformerCirAlignPrompt(Blip2Base):
         bs = target_indexs.shape[0]
         # query tokens
         query_tokens = self.query_tokens.expand(bs, -1, -1)
-        query_atts = torch.ones(query_tokens.size()[:-1], dtype=torch.long).to(
-            self.device
-        )
+        query_atts = torch.ones(query_tokens.size()[:-1], dtype=torch.long).to(self.device)
         # text tokens
         text_tokens = self.tokenizer(
             text,
@@ -263,6 +263,7 @@ class Blip2QformerCirAlignPrompt(Blip2Base):
             loss_qtc_i = F.cross_entropy(sim_q2t, ground_truth_i)
             loss_qtc += loss_qtc_i
         loss_qtc /= bs
+        print('loss_qtc:', loss_qtc)
         return {
             'loss_qtc': loss_qtc,
         }

@@ -99,6 +99,13 @@ def targetpad_transform(target_ratio: float, dim: int):
 
 
 def generate_randomized_fiq_caption(captions, type=-1):
+    """
+    Function which randomize the FashionIQ training captions in four way: (a) cap1 and cap2 (b) cap2 and cap1 (c) cap1
+    (d) cap2
+    :param flattened_captions: the list of caption to randomize, note that the length of such list is 2*batch_size since
+     to each triplet are associated two captions
+    :return: the randomized caption list (with length = batch_size)
+    """
     random_num = random.random()
     if type == 0:
         random_num = 0.12
@@ -166,7 +173,8 @@ class CIRDataset(Dataset):
                     "reference_name": triplet["candidate"],
                     "target": os.path.join(self.image_path, f'{triplet["target"]}.jpg'),
                     "target_name": triplet["target"],
-                    "captions": triplet['captions']
+                    "captions": triplet['captions'],
+                    "generated": triplet['generated'] 
                 }
                 for triplet in self.triplets
             ]
@@ -181,6 +189,7 @@ class CIRDataset(Dataset):
                     self.val_image_names.append(triplet['reference_name'])
                     self.val_image_names.append(triplet['target_name'])
                 self.val_image_names = list(set(self.val_image_names))
+
         elif self.data_name == 'cirr':
             self.caption_path = os.path.join(self.data_path, 'cirr/captions')
             self.image_splits_path = os.path.join(self.data_path, 'cirr/image_splits')
@@ -216,6 +225,38 @@ class CIRDataset(Dataset):
                 }
                 for triplet in self.triplets
             ]
+        
+        elif self.data_name == 'shoes':
+            self.caption_path = os.path.join(self.data_path, 'captions')
+            self.image_splits_path = os.path.join(self.data_path, 'image_splits')
+            self.image_path = self.data_path
+            with open(os.path.join(self.caption_path, f'split.shoes.{self.split}.json')) as f:
+                self.triplets = json.load(f)
+                self.N = len(self.triplets)
+            with open(os.path.join(self.image_splits_path, f'split.shoes.{self.split}.json')) as f:
+                self.name_to_relpath = json.load(f)
+            if self.split == 'train' and plus:
+                with open(os.path.join(self.caption_path, f'cap.shoes.train.extend_blip2.json')) as f:
+                    extend_triplets = json.load(f)
+                    if llmcap:
+                        for triplet in extend_triplets:
+                            triplet['caption'] = [
+                                triplet['llm_caption'],
+                                # triplet['caption'][0],
+                                triplet['caption'][1],
+                            ]
+                    self.triplets.extend(extend_triplets)
+            self.triplets = [
+                {
+                    "reference": os.path.join(self.image_path, f'{triplet["ReferenceImageName"]}'),
+                    "reference_name": triplet["candidate"],
+                    "target": os.path.join(self.image_path, f'{triplet["ImageName"]}'),
+                    "target_name": triplet["target"],
+                    "captions": triplet["RelativeCaption"]
+                }
+                for triplet in self.triplets
+            ]
+
         if split == 'train':
             self.target_id = 0
             self.image_id = 0
@@ -254,6 +295,7 @@ class CIRDataset(Dataset):
             reference_name = triplet['reference_name']
             reference_image_path = triplet['reference']
             captions = triplet['captions']
+            generated = triplet['generated']
             if self.split == 'train':
                 target_index = self.targetname2id[triplet['target_name']]
                 reference_index_all = self.imagename2id[triplet['reference_name']]
@@ -285,7 +327,9 @@ class CIRDataset(Dataset):
             elif self.split == 'val':
                 target_name = triplet['target_name']
                 if self.data_name == 'fiq':
-                    return reference_name, target_name, captions
+                    return reference_name, target_name, captions, generated
+                elif self.data_name == 'shoes':
+                    return reference_name, target_name, captions, generated
                 elif self.data_name == 'cirr':
                     return reference_name, target_name, captions[0], triplet['group_members']
             elif self.split == 'test1':
@@ -307,6 +351,11 @@ class CIRDataset(Dataset):
                     image_path = os.path.join(self.image_path, f"{image_name}.jpg")
                     image = self.preprocess(PIL.Image.open(image_path))
                     return image_name, image
+            elif self.data_name == 'shoes':
+                image_name = self.imagenames[index]
+                image_path = self.imagepaths[index]
+                image = self.preprocess(PIL.Image.open(image_path))
+                return image_name, image
             elif self.data_name == 'cirr':
                 image_name = list(self.name_to_relpath.keys())[index]
                 image_path = base_path / 'cirr_dataset' / self.name_to_relpath[image_name]
@@ -322,5 +371,7 @@ class CIRDataset(Dataset):
                     return len(self.image_names)
                 else:
                     return len(self.val_image_names)
+            elif self.data_name == 'shoes':
+                return len(self.image_names)
             elif self.data_name == 'cirr':
                 return len(self.name_to_relpath)

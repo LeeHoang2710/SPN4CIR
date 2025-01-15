@@ -158,9 +158,7 @@ if __name__ == "__main__":
 
     if args.conv_mode is not None and conv_mode != args.conv_mode:
         print(
-            '[WARNING] the auto inferred conversation mode is {}, while `--conv-mode` is {}, using {}'.format(conv_mode,
-                                                                                                              args.conv_mode,
-                                                                                                              args.conv_mode))
+            '[WARNING] the auto inferred conversation mode is {}, while `--conv-mode` is {}, using {}'.format(conv_mode, args.conv_mode, args.conv_mode))
     else:
         args.conv_mode = conv_mode
 

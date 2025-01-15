@@ -3,3 +3,5 @@ fashionIQ_dataset/*
 result/*
 checkpoints/*
 *.pyc
+shoes_dataset/*
+data/*

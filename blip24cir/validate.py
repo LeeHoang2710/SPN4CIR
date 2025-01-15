@@ -15,7 +15,7 @@ from data_utils import squarepad_transform, targetpad_transform
 from utils import extract_index_features, collate_fn, device
 from data_utils import CIRDataset
 from models import CIRPlus
-from IPython import embed
+# from IPython import embed
 from PIL import Image, ImageDraw, ImageOps
 
 
@@ -35,6 +35,8 @@ def visualize_top_k_results(top_k_results: List[List[str]], target_names: List[s
 
     for i, (query_name, top_k, reference_name, caption) in enumerate(zip(target_names, top_k_results, reference_names, captions)):
         image_list = []
+
+        # First row: reference and target image
         reference_image = Image.open(f"{image_dir}/{reference_name}.jpg").resize((128, 128))
         reference_image = ImageOps.expand(reference_image, border=5, fill='yellow')
         image_list.append(reference_image)
@@ -43,8 +45,8 @@ def visualize_top_k_results(top_k_results: List[List[str]], target_names: List[s
         query_image = ImageOps.expand(query_image, border=5, fill='blue')
         image_list.append(query_image)
 
-        # draw = ImageDraw.Draw(query_image)
-        for j, result in enumerate(top_k):
+        # Second row: top 5 images
+        for j, result in enumerate(top_k[:5]):
             result_image = Image.open(f"{image_dir}/{result}.jpg").resize((128, 128))
             if result == query_name:
                 result_image = ImageOps.expand(result_image, border=5, fill='green')
@@ -52,24 +54,42 @@ def visualize_top_k_results(top_k_results: List[List[str]], target_names: List[s
                 result_image = ImageOps.expand(result_image, border=5, fill='red')
             image_list.append(result_image)
 
-        total_width = sum(img.size[0] for img in image_list)
-        max_height = max(img.size[1] for img in image_list)
-        combined_image = Image.new('RGB', (total_width, max_height + 30))  # Add space for text
+        # Third row: top 6-10 images
+        for j, result in enumerate(top_k[5:10]):
+            result_image = Image.open(f"{image_dir}/{result}.jpg").resize((128, 128))
+            if result == query_name:
+                result_image = ImageOps.expand(result_image, border=5, fill='green')
+            else:
+                result_image = ImageOps.expand(result_image, border=5, fill='red')
+            image_list.append(result_image)
 
+        # Calculate the dimensions for the combined image
+        row_count = 3
+        col_count = max(2, 5, 5)
+        total_width = 128 * col_count
+        total_height = 128 * row_count + 30  # Add space for text
+
+        combined_image = Image.new('RGB', (total_width, total_height))
+
+        # Paste images into the combined image
         x_offset = 0
-        for img in image_list:
-            combined_image.paste(img, (x_offset, 0))
+        y_offset = 0
+        for idx, img in enumerate(image_list):
+            combined_image.paste(img, (x_offset, y_offset))
             x_offset += img.size[0]
+            if (idx + 1) % col_count == 0:
+                x_offset = 0
+                y_offset += img.size[1]
 
         # Draw the caption text below the image
         draw = ImageDraw.Draw(combined_image)
-        text_position = (10, max_height + 5)
-        draw.text(text_position, caption, fill="white")
+        text_position = (10, total_height - 25)
+        text = "Query: " + caption
+        draw.text(text_position, text, fill="white")
 
         # Save the combined image
         combined_image.save(f"{save_dir}/{query_name}.jpg")
         print(f"Saved visualization for {query_name}.jpg")
-
 
 
 def compute_fiq_val_metrics(relative_val_dataset: CIRDataset, model, index_features: torch.tensor,
@@ -96,7 +116,7 @@ def compute_fiq_val_metrics(relative_val_dataset: CIRDataset, model, index_featu
     recall_at50 = (torch.sum(labels[:, :50]) / len(labels)).item() * 100
 
     top_k_results = sorted_index_names[:, :top_k].tolist()
-    embed()
+    # embed()
 
     return recall_at10, recall_at50, top_k_results, target_names, reference_names, captions_all
 
@@ -118,13 +138,22 @@ def generate_fiq_val_predictions(model, relative_val_dataset: CIRDataset, index_
     distance = None
     captions_all = []
 
-    for reference_names, batch_target_names, captions in tqdm(relative_val_loader):  # Load data
+    for reference_names, batch_target_names, captions, generated in tqdm(relative_val_loader):  # Load data
 
         # Concatenate the captions in a deterministic way
         flattened_captions: list = np.array(captions).T.flatten().tolist()
-        input_captions = [
-            f"{flattened_captions[i].strip('.?, ').capitalize()} and {flattened_captions[i + 1].strip('.?, ')}" for
-            i in range(0, len(flattened_captions), 2)]
+        length = int(len(flattened_captions) / 2)
+        try:
+            input_captions = [
+                f"{generated[i]} and {flattened_captions[i*2].strip('.?, ')} and {flattened_captions[i*2 + 1].strip('.?, ')}"
+                # for i in range(0, len(flattened_captions), 2)
+                for i in range(0, length)
+            ]
+        except IndexError:
+            input_captions = [
+                f"{flattened_captions[i].strip('.?, ').capitalize()} and {flattened_captions[i + 1].strip('.?, ')}" for
+                i in range(0, len(flattened_captions), 2)
+            ]
         input_captions = [model.txt_processors["eval"](caption) for caption in input_captions]
         # Compute the predicted features
         with torch.no_grad():
@@ -318,29 +347,29 @@ if __name__ == '__main__':
         average_recall10_list = []
         average_recall50_list = []
 
-        shirt_recallat10, shirt_recallat50, top_K_results, target_names, reference_images, captions_all = fashioniq_val_retrieval('shirt', model, preprocess)
-        average_recall10_list.append(shirt_recallat10)
-        average_recall50_list.append(shirt_recallat50)
-        visualize_top_k_results(top_K_results, target_names, reference_images, captions_all, 'fashionIQ_dataset/images', 'result/shirt')
+        # shirt_recallat10, shirt_recallat50, top_K_results, target_names, reference_images, captions_all = fashioniq_val_retrieval('shirt', model, preprocess)
+        # average_recall10_list.append(shirt_recallat10)
+        # average_recall50_list.append(shirt_recallat50)
+        # visualize_top_k_results(top_K_results, target_names, reference_images, captions_all, 'fashionIQ_dataset/images', 'result/shirt')
 
         dress_recallat10, dress_recallat50, top_K_results, target_names, reference_images, captions_all = fashioniq_val_retrieval('dress', model, preprocess)
         average_recall10_list.append(dress_recallat10)
         average_recall50_list.append(dress_recallat50)
         visualize_top_k_results(top_K_results, target_names, reference_images, captions_all, 'fashionIQ_dataset/images', 'result/dress')
 
-        toptee_recallat10, toptee_recallat50, top_K_results, target_names, reference_images, captions_all = fashioniq_val_retrieval('toptee', model, preprocess)
-        average_recall10_list.append(toptee_recallat10)
-        average_recall50_list.append(toptee_recallat50)
-        visualize_top_k_results(top_K_results, target_names, reference_images, captions_all, 'fashionIQ_dataset/images', 'result/toptee')
+        # toptee_recallat10, toptee_recallat50, top_K_results, target_names, reference_images, captions_all = fashioniq_val_retrieval('toptee', model, preprocess)
+        # average_recall10_list.append(toptee_recallat10)
+        # average_recall50_list.append(toptee_recallat50)
+        # visualize_top_k_results(top_K_results, target_names, reference_images, captions_all, 'fashionIQ_dataset/images', 'result/toptee')
 
         print(f"{dress_recallat10 = }")
         print(f"{dress_recallat50 = }")
 
-        print(f"\n{shirt_recallat10 = }")
-        print(f"{shirt_recallat50 = }")
+        # print(f"\n{shirt_recallat10 = }")
+        # print(f"{shirt_recallat50 = }")
 
-        print(f"{toptee_recallat10 = }")
-        print(f"{toptee_recallat50 = }")
+        # print(f"{toptee_recallat10 = }")
+        # print(f"{toptee_recallat50 = }")
 
         print(f"average recall10 = {mean(average_recall10_list)}")
         print(f"average recall50 = {mean(average_recall50_list)}")
