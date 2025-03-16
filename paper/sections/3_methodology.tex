@@ -1,16 +1,16 @@
-\FloatBarrier
 \section{Methodology}
 
-\begin{figure*}[t]
+\begin{figure*}[thbp]
     \centering
-    \includegraphics[width=\textwidth]{figures/workflows.png}
-    \caption{Workflows of the Late Fusion method (left) and our proposed one (right).}
-    \label{fig:workflows}
+    \includegraphics[width=\textwidth]{figures/success1.jpg}
+    \includegraphics[width=\textwidth]{figures/success2.jpg}
+    \includegraphics[width=\textwidth]{figures/failure1.jpg}
+    \includegraphics[width=\textwidth]{figures/failure2.jpg}
+    \caption{Illustrative examples of the model's performance. The first two images represent success cases, while the last two images represent failure cases.}
+    \label{fig:performance}
 \end{figure*}
 
 \subsection{Baselines}
-The baselines we used are derived from two key papers. Bai et al., 2023~\cite{bai2023sentencelevelpromptsbenefitcomposed} introduces the initial methodology for composed image retrieval (CIR) using sentence-level prompts. Feng et al., 2024~\cite{feng2024improvingcomposedimageretrieval} presents improvements over the first by leveraging contrastive learning with scaling positives and negatives to enhance CIR performance. Figure~\ref{fig:workflows}, based on Figure provides an overview of the methodology.
-
 \subsubsection{Preliminary}
 Suppose a CIR dataset consists of \(N\) annotated triplets consisting of reference images (\(r\)), modified text (\(t\)), and target image (\(t\)). A candidate image set consists of all reference images and target images. The task is to use reference image \(r(i)\) and modified text \(t(i)\) to compose a query \(q(i)\). Then this \(q(i)\) is used to retrieve target images from the candidate set.
 
@@ -50,7 +50,7 @@ In the first stage, fine-tune both the query encoder and the target encoder with
 We aim to improve the baseline model by integrating new techniques and optimizations.
 
 \subsubsection{Image Generation}
-One potential approach is to generate images that seamlessly align with the reference image and relative captions. By integrating a new image, we think that the model can incorporate image-side information to improve the performance of the model. We propose to input the reference image and text into the Multi-Instance Generation Controller (MIGC)~\cite{Zhou_2024_CVPR} to generate a new image. This new image can provide useful information that are difficult to express in text at a fine-grained level.
+One potential approach is to generate images that seamlessly align with the reference image and relative captions. By integrating a new image, we think that the model can incorporate image-side information to improve the performance of the model. We propose to input the reference image and text into the Multi-Instance Generation Controller (MIGC)~\cite{zhou2024migc} to generate a new image. This new image can provide useful information that is difficult to express in text at a fine-grained level.
 
 \subsubsection{Two-stage Optimization}
 We also propose a two-stage approach to optimize the performance. First, we filter out the candidate images that are not relevant to the reference image and modified text. Then, we use the filtered candidate images to retrieve the target image. This approach can reduce the search space and improve the retrieval performance.

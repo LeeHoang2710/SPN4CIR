@@ -1,45 +1,32 @@
-\documentclass[conference, a4paper]{IEEEtran}
-
+\documentclass[conference,a4paper]{IEEEtran}
 \usepackage{amsmath,amssymb,amsfonts}
-\usepackage{algorithmic}
-\usepackage{cite}
-\usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{multirow}
-\usepackage{orcidlink}
-\usepackage{placeins,textcomp}
+\usepackage{algorithmic,cite,graphicx,hyperref}
+\usepackage{multirow,orcidlink,placeins,textcomp}
 \usepackage{tikz,xcolor}
+\usepackage{float}
 
 \begin{document}
 
-\title{Fashion Retrieval}
-
-\author{
-    \IEEEauthorblockN{Lê Hoàng Bùi}
-    \IEEEauthorblockA{
-        \textit{Faculty of Information Technology}\\
+\title{Exploring Fashion Image Retrieval with Multi-Modal Large Language Models and Two-Stage Fine-Tuning}
+\author{\IEEEauthorblockN{Lê Hoàng Bùi}
+    \IEEEauthorblockA{\textit{Faculty of Information Technology}\\
         \textit{University of Science, VNU-HCM}\\
         Ho Chi Minh City, Vietnam\\
         \orcidlinkc{0009-0003-1162-234X}
     }
-    \and
-    \IEEEauthorblockN{Hoang Nguyen Cao}
-    \IEEEauthorblockA{
-        \textit{Faculty of Information Technology}\\
+    \and\IEEEauthorblockN{Hoang Nguyen Cao}
+    \IEEEauthorblockA{\textit{Faculty of Information Technology}\\
         \textit{University of Science, VNU-HCM}\\
         Ho Chi Minh City, Vietnam\\
         \orcidlinkc{0009-0003-0459-730X}
     }
-    \and
-    \IEEEauthorblockN{Hoang-Nam Vo}
-    \IEEEauthorblockA{
-        \textit{Faculty of Information Technology}\\
+    \and\IEEEauthorblockN{Hoang-Nam Vo}
+    \IEEEauthorblockA{\textit{Faculty of Information Technology}\\
         \textit{University of Science, VNU-HCM}\\
         Ho Chi Minh City, Vietnam\\
         \orcidlinkc{0009-0000-2835-3711}
     }
 }
-
 \maketitle
 
 \input{sections/0_abstract}
