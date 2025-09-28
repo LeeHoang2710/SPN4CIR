@@ -190,112 +190,6 @@ def fashioniq_val_retrieval(dress_type: str, model, preprocess: callable):
 
     return compute_fiq_val_metrics(relative_val_dataset, model, index_features, index_names)
 
-
-def compute_cirr_val_metrics(relative_val_dataset: CIRDataset, model, index_features: torch.tensor,
-                             index_names: List[str], device=torch.device('cuda')) -> Tuple[
-    float, float, float, float, float, float, float]:
-    # Generate predictions
-    pred_sim, reference_names, target_names, group_members, captions_all = \
-        generate_cirr_val_predictions(model, relative_val_dataset, index_names, index_features, device)
-
-    print("Compute CIRR validation metrics")
-    # Compute the distances and sort the results
-    distances = 1 - pred_sim
-    sorted_indices = torch.argsort(distances, dim=-1).cpu()
-    sorted_index_names = np.array(index_names)[sorted_indices]
-
-    # Delete the reference image from the results
-    reference_mask = torch.tensor(
-        sorted_index_names != np.repeat(np.array(reference_names), len(index_names)).reshape(len(target_names), -1))
-    sorted_index_names = sorted_index_names[reference_mask].reshape(sorted_index_names.shape[0],
-                                                                    sorted_index_names.shape[1] - 1)
-
-    labels = torch.tensor(
-        sorted_index_names == np.repeat(np.array(target_names), len(index_names) - 1).reshape(len(target_names), -1))
-
-    # Compute the subset predictions and ground-truth labels
-    group_members = np.array(group_members)
-    group_mask = (sorted_index_names[..., None] == group_members[:, None, :]).sum(-1).astype(bool)
-    group_labels = labels[group_mask].reshape(labels.shape[0], -1)
-
-    assert torch.equal(torch.sum(labels, dim=-1).int(), torch.ones(len(target_names)).int())
-    assert torch.equal(torch.sum(group_labels, dim=-1).int(), torch.ones(len(target_names)).int())
-
-    # Compute the metrics
-    recall_at1 = (torch.sum(labels[:, :1]) / len(labels)).item() * 100
-    recall_at5 = (torch.sum(labels[:, :5]) / len(labels)).item() * 100
-    recall_at10 = (torch.sum(labels[:, :10]) / len(labels)).item() * 100
-    recall_at50 = (torch.sum(labels[:, :50]) / len(labels)).item() * 100
-    group_recall_at1 = (torch.sum(group_labels[:, :1]) / len(group_labels)).item() * 100
-    group_recall_at2 = (torch.sum(group_labels[:, :2]) / len(group_labels)).item() * 100
-    group_recall_at3 = (torch.sum(group_labels[:, :3]) / len(group_labels)).item() * 100
-
-    return group_recall_at1, group_recall_at2, group_recall_at3, recall_at1, recall_at5, recall_at10, recall_at50
-
-
-def generate_cirr_val_predictions(model, relative_val_dataset: CIRDataset, index_names: List[str],
-                                  index_features: torch.tensor, device=torch.device('cuda')):
-    print("Compute CIRR validation predictions")
-    relative_val_loader = DataLoader(dataset=relative_val_dataset, batch_size=32, num_workers=2,
-                                     pin_memory=True, collate_fn=collate_fn)
-
-    # Get a mapping from index names to index features
-    name_to_feat = dict(zip(index_names, index_features[1]))
-
-    # Initialize predicted features, target_names, group_members and reference_names
-    distance = []
-    target_names = []
-    group_members = []
-    reference_names = []
-    captions_all = []
-
-    for batch_reference_names, batch_target_names, captions, batch_group_members in tqdm(
-            relative_val_loader):  # Load data
-        batch_group_members = np.array(batch_group_members).T.tolist()
-        captions = [model.txt_processors["eval"](caption) for caption in captions]
-        # Compute the predicted features
-        with torch.no_grad():
-            # text_features = clip_model.encode_text(text_inputs)
-            # Check whether a single element is in the batch due to the exception raised by torch.stack when used with
-            # a single tensor
-            if len(captions) == 1:
-                reference_image_features = itemgetter(*batch_reference_names)(name_to_feat).unsqueeze(0)
-            else:
-                reference_image_features = torch.stack(itemgetter(*batch_reference_names)(
-                    name_to_feat))  # To avoid unnecessary computation retrieve the reference image features directly from the index features
-            batch_distance = model.blip_model.inference(reference_image_features.to(device),
-                                                        index_features[0].to(device),
-                                                        captions)
-            distance.append(batch_distance)
-            captions_all += captions
-
-        target_names.extend(batch_target_names)
-        group_members.extend(batch_group_members)
-        reference_names.extend(batch_reference_names)
-
-    distance = torch.vstack(distance)
-
-    return distance, reference_names, target_names, group_members, captions_all
-
-
-def cirr_val_retrieval(model, preprocess: callable):
-    """
-    Perform retrieval on CIRR validation set computing the metrics. To combine the features the `combining_function`
-    is used
-    :param combining_function: function which takes as input (image_features, text_features) and outputs the combined
-                            features
-    :param clip_model: CLIP model
-    :param preprocess: preprocess pipeline
-    """
-
-    # Define the validation datasets and extract the index features
-    classic_val_dataset = CIRDataset('cirr', 'val', 'classic', preprocess, args.data_path)
-    index_features, index_names = extract_index_features(classic_val_dataset, model)
-    relative_val_dataset = CIRDataset('cirr', 'val', 'relative', preprocess, args.data_path)
-
-    return compute_cirr_val_metrics(relative_val_dataset, model, index_features, index_names)
-
-
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument("--dataset", type=str, required=True, help="should be either 'cirr' or 'fiq'")
@@ -331,45 +225,34 @@ if __name__ == '__main__':
         print('CLIP default preprocess pipeline is used')
         preprocess = model.preprocess
 
-    if args.dataset.lower() == 'cirr':
-        group_recall_at1, group_recall_at2, group_recall_at3, recall_at1, recall_at5, recall_at10, recall_at50 = \
-            cirr_val_retrieval(model, preprocess)
 
-        print(f"{group_recall_at1 = }")
-        print(f"{group_recall_at2 = }")
-        print(f"{group_recall_at3 = }")
-        print(f"{recall_at1 = }")
-        print(f"{recall_at5 = }")
-        print(f"{recall_at10 = }")
-        print(f"{recall_at50 = }")
-
-    elif args.dataset.lower() == 'fiq':
+    if args.dataset.lower() == 'fiq':
         average_recall10_list = []
         average_recall50_list = []
 
-        # shirt_recallat10, shirt_recallat50, top_K_results, target_names, reference_images, captions_all = fashioniq_val_retrieval('shirt', model, preprocess)
-        # average_recall10_list.append(shirt_recallat10)
-        # average_recall50_list.append(shirt_recallat50)
-        # visualize_top_k_results(top_K_results, target_names, reference_images, captions_all, 'fashionIQ_dataset/images', 'result/shirt')
+        shirt_recallat10, shirt_recallat50, top_K_results, target_names, reference_images, captions_all = fashioniq_val_retrieval('shirt', model, preprocess)
+        average_recall10_list.append(shirt_recallat10)
+        average_recall50_list.append(shirt_recallat50)
+        visualize_top_k_results(top_K_results, target_names, reference_images, captions_all, 'fashionIQ_dataset/images', 'result/shirt')
 
         dress_recallat10, dress_recallat50, top_K_results, target_names, reference_images, captions_all = fashioniq_val_retrieval('dress', model, preprocess)
         average_recall10_list.append(dress_recallat10)
         average_recall50_list.append(dress_recallat50)
         visualize_top_k_results(top_K_results, target_names, reference_images, captions_all, 'fashionIQ_dataset/images', 'result/dress')
 
-        # toptee_recallat10, toptee_recallat50, top_K_results, target_names, reference_images, captions_all = fashioniq_val_retrieval('toptee', model, preprocess)
-        # average_recall10_list.append(toptee_recallat10)
-        # average_recall50_list.append(toptee_recallat50)
-        # visualize_top_k_results(top_K_results, target_names, reference_images, captions_all, 'fashionIQ_dataset/images', 'result/toptee')
+        toptee_recallat10, toptee_recallat50, top_K_results, target_names, reference_images, captions_all = fashioniq_val_retrieval('toptee', model, preprocess)
+        average_recall10_list.append(toptee_recallat10)
+        average_recall50_list.append(toptee_recallat50)
+        visualize_top_k_results(top_K_results, target_names, reference_images, captions_all, 'fashionIQ_dataset/images', 'result/toptee')
 
         print(f"{dress_recallat10 = }")
         print(f"{dress_recallat50 = }")
 
-        # print(f"\n{shirt_recallat10 = }")
-        # print(f"{shirt_recallat50 = }")
+        print(f"\n{shirt_recallat10 = }")
+        print(f"{shirt_recallat50 = }")
 
-        # print(f"{toptee_recallat10 = }")
-        # print(f"{toptee_recallat50 = }")
+        print(f"{toptee_recallat10 = }")
+        print(f"{toptee_recallat50 = }")
 
         print(f"average recall10 = {mean(average_recall10_list)}")
         print(f"average recall50 = {mean(average_recall50_list)}")
